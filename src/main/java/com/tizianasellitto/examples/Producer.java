@@ -8,10 +8,7 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
 /**
- * This producer will send a bunch of messages to topic "fast-messages". Every
- * so often, it will send a message to "slow-messages". This shows how messages
- * can be sent to multiple topics. On the receiving end, we will see both kinds
- * of messages but will also see how the two topics aren't really synchronized.
+ * This producer will send a bunch of messages to topic "message-topic".
  */
 public class Producer {
 	public static void main(String[] args) throws IOException {
@@ -25,11 +22,12 @@ public class Producer {
 		try {
 			for (int i = 0; i < 10000; i++) {
 				// send lots of messages
-			    producer.send(new ProducerRecord<String, String>("message-topic", Integer.toString(i), "message " + Integer.toString(i)));
+				producer.send(new ProducerRecord<String, String>("message-topic", Integer.toString(i),
+						"message " + Integer.toString(i)));
 				producer.flush();
 				System.out.println("Sent msg number " + i);
 			}
-		}finally {
+		} finally {
 			producer.close();
 		}
 	}
